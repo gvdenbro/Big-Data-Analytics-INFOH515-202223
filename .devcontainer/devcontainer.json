@@ -1,0 +1,49 @@
+{
+    "name": "INFO-H515 - Big Data Scalable Analytics - devcontainer",
+    "image": "docker.io/yannael/ulb_infoh515:latest",
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": false,
+            "upgradePackages": false,
+            "username": "guest",
+            "userUid": "automatic", // handles permissions for non-root user - avoids having to update dockerfile as described:
+            "userGid": "automatic" // https://github.com/TheoVerhelst/Big-Data-Analytics-INFOH515-202223/blob/main/Docker/README.md#user-uid
+        }
+    },
+    "forwardPorts": [
+        8888,
+        4040
+    ],
+    "portsAttributes": {
+        "8888": {
+            "label": "Jupyter Notebook"
+        },
+        "4040": {
+            "label": "Spark UI"
+        }
+    },
+    "postAttachCommand": {
+        "jupyter-start": "jupyter-lab --no-browser --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.iopub_data_rate_limit=2147483647"
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "python.defaultInterpreterPath": "/home/guest/anaconda3/bin/python",
+                "jupyter.themeMatplotlibPlots": true,
+                "jupyter.widgetScriptSources": [
+                    "unpkg.com",
+                    "jsdelivr.com"
+                ],
+                "jupyter.kernels.excludePythonEnvironments": [
+                    "/usr/bin/python3",
+                    "/bin/python3"
+                ]
+            },
+            "extensions": [
+                "ms-toolsai.jupyter",
+                "ms-python.python"
+            ]
+        }
+    },
+    "remoteUser": "guest"
+}
